@@ -24,11 +24,13 @@ import java.time.LocalDateTime;
 import org.springframework.util.Assert;
 
 /**
- * A guestbook entry. An entity as in the Domain Driven Design context. Mapped onto the database using JPA annotations.
+ * A guestbook entry. An entity as in the Domain Driven Design context. Mapped
+ * onto the database using JPA annotations.
  *
  * @author Paul Henke
  * @author Oliver Drotbohm
- * @see <a href="https://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks">(Wikipedia)
+ * @see <a href=
+ *      "https://en.wikipedia.org/wiki/Domain-driven_design#Building_blocks">(Wikipedia)
  *      Domain-Driven-Design</a>
  */
 @Entity
@@ -37,6 +39,7 @@ class GuestbookEntry {
 	private @Id @GeneratedValue Long id;
 	private final String name, text;
 	private final LocalDateTime date;
+	private final String mail;
 
 	/**
 	 * Creates a new {@link GuestbookEntry} for the given name and text.
@@ -44,13 +47,15 @@ class GuestbookEntry {
 	 * @param name must not be {@literal null} or empty
 	 * @param text must not be {@literal null} or empty
 	 */
-	public GuestbookEntry(String name, String text) {
+	public GuestbookEntry(String name, String text, String mail) {
 
 		Assert.hasText(name, "Name must not be null or empty!");
 		Assert.hasText(text, "Text must not be null or empty!");
+		Assert.hasText(mail, "Mail must not be null or empty!");
 
 		this.name = name;
 		this.text = text;
+		this.mail = mail; 
 		this.date = LocalDateTime.now();
 	}
 
@@ -59,6 +64,7 @@ class GuestbookEntry {
 		this.name = null;
 		this.text = null;
 		this.date = null;
+		this.mail = null;
 	}
 
 	public String getName() {
@@ -75,5 +81,9 @@ class GuestbookEntry {
 
 	public String getText() {
 		return text;
+	}
+
+	public String getMail() {
+		return mail;
 	}
 }

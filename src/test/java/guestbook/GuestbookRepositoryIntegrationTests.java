@@ -27,7 +27,8 @@ import org.springframework.data.domain.Sort;
 /**
  * Integration tests for {@link GuestbookRepository}.
  * <p>
- * Bootstraps the application using the {@link Application} configuration class. Enables transaction rollbacks after
+ * Bootstraps the application using the {@link Application} configuration class.
+ * Enables transaction rollbacks after
  * test methods using the {@link Transactional} annotation.
  *
  * @author Oliver Drotbohm
@@ -37,12 +38,13 @@ import org.springframework.data.domain.Sort;
 @Transactional
 class GuestbookRepositoryIntegrationTests {
 
-	@Autowired GuestbookRepository repository;
+	@Autowired
+	GuestbookRepository repository;
 
 	@Test
 	void persistsGuestbookEntry() {
 
-		var entry = repository.save(new GuestbookEntry("Yoda", "May the force be with you!"));
+		var entry = repository.save(new GuestbookEntry("Yoda", "May the force be with you!", "yoda@example.com"));
 
 		assertThat(repository.findAll()).contains(entry);
 	}
@@ -50,7 +52,7 @@ class GuestbookRepositoryIntegrationTests {
 	@Test // #34
 	void findsGuestbookEntryByAuthorName() {
 
-		var entry = repository.save(new GuestbookEntry("Yoda", "May the force be with you!"));
+		var entry = repository.save(new GuestbookEntry("Yoda", "May the force be with you!", "yoda@example.com"));
 
 		assertThat(repository.findByName("Yoda", Sort.by("date"))).contains(entry);
 	}
